@@ -13,8 +13,10 @@ import * as ImagePicker from "expo-image-picker";
 import { CameraView } from "expo-camera";
 import wb_sunny from "../../../assets/wb_sunny_24dp.png";
 import location from "../../../assets/location_on_24dp.png";
+import baby_sunny from "../../../assets/baby_sun.png";
 import ExpoLocation from "../../component/expo_location";
-import { Link } from "expo-router";
+import Notif from "../../component/notif";
+import { Link, router } from "expo-router";
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -36,6 +38,10 @@ export default function App() {
         <Button onPress={requestPermission} title="Request permissions" />
       </View>
     );
+
+  const profileHandler = async () => {
+    router.push("/profile");
+  };
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -78,17 +84,18 @@ export default function App() {
               marginRight: 10,
             }}
           >
-            <TouchableOpacity>
-              <Link href="/modal" style={{ width: "100%", height: "100%" }}>
-                <Image
-                  source={{
-                    uri: image
-                      ? image
-                      : "https://i.scdn.co/image/ab67616d0000b273e7714e34d990a32111e66309",
-                  }}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </Link>
+            <TouchableOpacity
+              style={{ width: 100, height: 100 }}
+              onPress={profileHandler}
+            >
+              <Image
+                source={{
+                  uri: image
+                    ? image
+                    : "https://i.scdn.co/image/ab67616d0000b273e7714e34d990a32111e66309",
+                }}
+                style={{ width: "100%", height: "100%" }}
+              />
             </TouchableOpacity>
           </View>
 
@@ -110,7 +117,31 @@ export default function App() {
           />
         </View>
       </View>
+
+      <View
+        className="flex items-center bg-white "
+        style={{ flexDirection: "row" }}
+      >
+        <View>
+          <Text style={{ fontWeight: "bold", width: 230 }}>
+            Good Morning, Chelsea
+          </Text>
+          <Text style={{ fontWeight: "thin", width: 230 }}>
+            Check all your incoming and outgoing transactions here
+          </Text>
+        </View>
+        <Image
+          source={baby_sunny}
+          style={{
+            height: 77,
+            alignItems: "flex-end",
+            marginRight: 10,
+          }}
+        />
+      </View>
+
       <View style={{ flex: 1 }}>
+        <Notif />
         <ExpoLocation setLocationName={setLocationName} />
       </View>
     </View>
