@@ -1,10 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
-import "./global.css";
+import "../../../global.css";
 import { useEffect, useRef, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { CameraView } from "expo-camera";
-import wb_sunny from "./assets/wb_sunny.png";
+import wb_sunny from "../../../assets/wb_sunny.png";
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -48,41 +48,40 @@ export default function App() {
 
   return (
     <View className="flex-1 items-center justify-center bg-white">
-      <View className="flex-row">
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "#FAFBFD",
+          padding: 10,
+        }}
+      >
         {image && (
-          <Image
-            source={{
-              uri: image,
+          <View
+            style={{
+              width: 46,
+              height: 46,
+              borderRadius: 23, // setengah dari width & height
+              overflow: "hidden",
+              backgroundColor: "#ccc", // buat placeholder kalau gambar belum kebuka
+              marginRight: 10,
             }}
-            style={{ width: 46, height: 46 }}
-            className=""
-          />
+          >
+            <Image
+              source={{ uri: image }}
+              style={{ width: "100%", height: "100%" }}
+            />
+            
+          </View>
         )}
-        <View className="flex">
-          <Text className="font-bold">Chelsea Immanuela</Text>
+
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontWeight: "bold" }}>Chelsea Immanuela</Text>
           <Text>Personal Account</Text>
-          <Image src={wb_sunny} style={{ width: 20, height: 20 }} alt="wb_sunny" />
+          <Image
+            source={wb_sunny} 
+            style={{ width: 20, height: 20 }}
+          />
         </View>
-        
-      </View>
-      <CameraView
-        style={{ width: 200, height: 200 }}
-        ref={cameraRef}
-        facing={type}
-      />
-      <View className="flex-row ">
-        <Button
-          title="Flip"
-          onPress={() =>
-            setType(
-              type === ImagePicker.CameraType.back
-                ? ImagePicker.CameraType.front
-                : ImagePicker.CameraType.back
-            )
-          }
-        />
-        <Button title="Pick image" onPress={pickImage} />
-        <Button title="Take Picture" onPress={takePicture} />
       </View>
     </View>
   );
