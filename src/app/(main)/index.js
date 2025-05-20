@@ -65,7 +65,7 @@ export default function App() {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1">
       <View className="flex items-center justify-center bg-white">
         <View
           style={{
@@ -119,14 +119,14 @@ export default function App() {
       </View>
 
       <View
-        className="flex items-center bg-white "
-        style={{ flexDirection: "row" }}
+        className="flex items-center justify-center"
+        style={{ flexDirection: "row", padding: 10 }}
       >
         <View>
           <Text style={{ fontWeight: "bold", width: 230 }}>
             Good Morning, Chelsea
           </Text>
-          <Text style={{ fontWeight: "thin", width: 230 }}>
+          <Text style={{ fontWeight: "thin", width: 230, paddingTop: 10 }}>
             Check all your incoming and outgoing transactions here
           </Text>
         </View>
@@ -138,6 +138,14 @@ export default function App() {
             marginRight: 10,
           }}
         />
+      </View>
+
+      <View
+        className="flex items-center justify-center"
+        style={{ padding: 10, flexDirection: "row" }}
+      >
+        <Text>Account No</Text>
+        <Text>123456789</Text>
       </View>
 
       <View style={{ flex: 1 }}>
