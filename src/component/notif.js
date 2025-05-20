@@ -61,10 +61,10 @@ export default function NotificationsExample() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Your Expo Push Token:</Text>
+      {/* <Text>Your Expo Push Token:</Text>
       <Text selectable style={{ margin: 10 }}>
         {expoPushToken || "Fetching token..."}
-      </Text>
+      </Text> */}
       <Button
         title="Schedule Local Notification"
         onPress={scheduleNotification}

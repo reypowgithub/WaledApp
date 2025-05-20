@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import {
   Button,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,6 +15,9 @@ import { CameraView } from "expo-camera";
 import wb_sunny from "../../../assets/wb_sunny_24dp.png";
 import location from "../../../assets/location_on_24dp.png";
 import baby_sunny from "../../../assets/baby_sun.png";
+import visibility from "../../../assets/visibility_24dp.png";
+import send from "../../../assets/send_24dp.png";
+import add from "../../../assets/add_24dp.png";
 import ExpoLocation from "../../component/expo_location";
 import Notif from "../../component/notif";
 import { Link, router } from "expo-router";
@@ -43,49 +47,13 @@ export default function App() {
     router.push("/profile");
   };
 
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    console.log(`url : `, result.assets[0].uri);
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
-
-  const takePicture = async () => {
-    if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      setImage(photo.uri);
-    }
-  };
-
   return (
-    <View className="flex-1">
-      <View className="flex items-center justify-center bg-white">
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: "#FAFBFD",
-            padding: 10,
-          }}
-        >
-          <View
-            style={{
-              width: 46,
-              height: 46,
-              borderRadius: 23, // setengah dari width & height
-              overflow: "hidden",
-              backgroundColor: "#ccc", // buat placeholder kalau gambar belum kebuka
-              marginRight: 10,
-            }}
-          >
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <View style={styles.profileContainer}>
+          <View style={styles.profileImageWrapper}>
             <TouchableOpacity
-              style={{ width: 100, height: 100 }}
+              style={styles.profileTouchable}
               onPress={profileHandler}
             >
               <Image
@@ -94,64 +62,274 @@ export default function App() {
                     ? image
                     : "https://i.scdn.co/image/ab67616d0000b273e7714e34d990a32111e66309",
                 }}
-                style={{ width: "100%", height: "100%" }}
+                style={styles.profileImage}
               />
             </TouchableOpacity>
           </View>
 
           <View style={{ flex: 1 }}>
-            <Text style={{ fontWeight: "bold" }}>Chelsea Immanuela</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Image source={location} style={{ width: 20, height: 20 }} />
+            <Text style={styles.profileName}>Chelsea Immanuela</Text>
+            <View style={styles.locationRow}>
+              <Image source={location} style={styles.iconSmall} />
               <Text>{locationName}</Text>
             </View>
           </View>
-          <Image
-            source={wb_sunny}
-            style={{
-              width: 30,
-              height: 30,
-              alignItems: "flex-end",
-              marginRight: 10,
-            }}
-          />
+
+          <Image source={wb_sunny} style={styles.sunnyIcon} />
         </View>
       </View>
 
-      <View
-        className="flex items-center justify-center"
-        style={{ flexDirection: "row", padding: 10 }}
-      >
-        <View>
-          <Text style={{ fontWeight: "bold", width: 230 }}>
-            Good Morning, Chelsea
-          </Text>
-          <Text style={{ fontWeight: "thin", width: 230, paddingTop: 10 }}>
-            Check all your incoming and outgoing transactions here
-          </Text>
+      <ScrollView>
+        <View style={styles.greetingContainer}>
+          <View style={styles.greetingTextWrapper}>
+            <Text style={styles.greetingTitle}>Good Morning, Chelsea</Text>
+            <Text style={styles.greetingSubtitle}>
+              Check all your incoming and outgoing transactions here
+            </Text>
+          </View>
+          <Image source={baby_sunny} style={styles.babySunnyImage} />
         </View>
-        <Image
-          source={baby_sunny}
-          style={{
-            height: 77,
-            alignItems: "flex-end",
-            marginRight: 10,
-          }}
-        />
-      </View>
 
-      <View
-        className="flex items-center justify-center"
-        style={{ padding: 10, flexDirection: "row" }}
-      >
-        <Text>Account No</Text>
-        <Text>123456789</Text>
-      </View>
+        <View style={styles.accountContainer}>
+          <Text style={styles.accountLabel}>Account No</Text>
+          <Text style={styles.accountNumber}>123456789</Text>
+        </View>
 
-      <View style={{ flex: 1 }}>
-        <Notif />
-        <ExpoLocation setLocationName={setLocationName} />
-      </View>
+        <View style={styles.balanceContainer}>
+          <View>
+            <Text style={styles.balanceLabel}>Balance</Text>
+            <View style={styles.balanceRow}>
+              <Text style={styles.balanceCurrency}>Rp</Text>
+              <Text style={styles.balanceAmount}>10.000.000</Text>
+              <Image source={visibility} style={styles.iconSmall} />
+            </View>
+          </View>
+
+          <View>
+            <View style={styles.actionButton}>
+              <Image source={add} style={styles.iconSmall} />
+            </View>
+            <View style={[styles.actionButton, { marginTop: 10 }]}>
+              <Image source={send} style={styles.iconSmall} />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.transactionContainer}>
+          <Text style={styles.transactionTitle}>Transaction History</Text>
+
+          <View style={styles.transactionItem}>
+            <View style={styles.profileImageWrapper}></View>
+            <View style={styles.transactionDetail}>
+              <Text style={styles.transactionName}>Adityo Gizwanda</Text>
+              <Text style={styles.transactionType}>Transfer</Text>
+              <Text style={styles.transactionDate}>08 December 2024</Text>
+            </View>
+            <Text style={styles.transactionAmount}>- 75.000</Text>
+          </View>
+
+          <View style={styles.transactionItem}>
+            <View style={styles.profileImageWrapper}></View>
+            <View style={styles.transactionDetail}>
+              <Text style={styles.transactionName}>Adityo Gizwanda</Text>
+              <Text style={styles.transactionType}>Transfer</Text>
+              <Text style={styles.transactionDate}>08 December 2024</Text>
+            </View>
+            <Text style={styles.transactionAmount}>- 75.000</Text>
+          </View>
+
+          <View style={styles.transactionItem}>
+            <View style={styles.profileImageWrapper}></View>
+            <View style={styles.transactionDetail}>
+              <Text style={styles.transactionName}>Adityo Gizwanda</Text>
+              <Text style={styles.transactionType}>Transfer</Text>
+              <Text style={styles.transactionDate}>08 December 2024</Text>
+            </View>
+            <Text style={styles.transactionAmount}>- 75.000</Text>
+          </View>
+
+          <View style={styles.transactionItem}>
+            <View style={styles.profileImageWrapper}></View>
+            <View style={styles.transactionDetail}>
+              <Text style={styles.transactionName}>Adityo Gizwanda</Text>
+              <Text style={styles.transactionType}>Transfer</Text>
+              <Text style={styles.transactionDate}>08 December 2024</Text>
+            </View>
+            <Text style={styles.transactionAmount}>- 75.000</Text>
+          </View>
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <ExpoLocation setLocationName={setLocationName} />
+          <Notif />
+          
+        </View>
+      </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    flex: 0,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profileContainer: {
+    flexDirection: "row",
+    backgroundColor: "#FAFBFD",
+    padding: 10,
+  },
+  profileImageWrapper: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    overflow: "hidden",
+    backgroundColor: "#ccc",
+    marginRight: 10,
+  },
+  // Tambahan style baru untuk transaction history
+  transactionContainer: {
+    marginHorizontal: 30,
+    marginVertical: 20,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    padding: 15,
+    justifyContent: "space-between",
+  },
+  transactionTitle: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  transactionItem: {
+    flexDirection: "row",
+    margin: 15,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  transactionDetail: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  transactionName: {
+    fontWeight: "bold",
+  },
+  transactionType: {
+    fontWeight: "300",
+  },
+  transactionDate: {
+    fontWeight: "300",
+    color: "grey",
+  },
+  transactionAmount: {
+    fontWeight: "bold",
+  },
+  // Style yang sudah ada sebelumnya...
+  profileTouchable: {
+    width: "100%",
+    height: "100%",
+  },
+  profileImage: {
+    width: "100%",
+    height: "100%",
+  },
+  profileName: {
+    fontWeight: "bold",
+  },
+  locationRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  sunnyIcon: {
+    width: 30,
+    height: 30,
+    alignSelf: "flex-end",
+    marginRight: 10,
+  },
+  iconSmall: {
+    width: 20,
+    height: 20,
+  },
+  greetingContainer: {
+    flexDirection: "row",
+    padding: 10,
+    marginTop: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  greetingTextWrapper: {
+    flexDirection: "column",
+    paddingRight: 10,
+  },
+  greetingTitle: {
+    fontWeight: "bold",
+    fontSize: 20,
+    width: 230,
+  },
+  greetingSubtitle: {
+    fontWeight: "300",
+    width: 230,
+    paddingTop: 20,
+    fontSize: 16,
+  },
+  babySunnyImage: {
+    height: 77,
+  },
+  accountContainer: {
+    margin: 30,
+    flexDirection: "row",
+    backgroundColor: "#0061FF",
+    borderRadius: 15,
+    padding: 15,
+    justifyContent: "space-between",
+  },
+  accountLabel: {
+    color: "white",
+    fontSize: 16,
+  },
+  accountNumber: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  balanceContainer: {
+    marginHorizontal: 30,
+    flexDirection: "row",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    padding: 15,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  balanceLabel: {
+    color: "black",
+    fontSize: 16,
+  },
+  balanceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 5,
+  },
+  balanceCurrency: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 24,
+    marginRight: 5,
+  },
+  balanceAmount: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 24,
+  },
+  actionButton: {
+    backgroundColor: "#0061FF",
+    borderRadius: 15,
+    padding: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
