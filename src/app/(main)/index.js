@@ -26,7 +26,6 @@ export default function App() {
   const [image, setImage] = useState(null);
   const [type, setType] = useState(ImagePicker.CameraType.back);
   const [permission, requestPermission] = ImagePicker.useCameraPermissions();
-  const [address, setAdresss] = useState(null);
   const cameraRef = useRef(null);
   const [locationName, setLocationName] = useState(null);
 
@@ -47,6 +46,14 @@ export default function App() {
     router.push("/profile");
   };
 
+  const topupHandler = async () => {
+    router.push("/topup");
+  };
+
+  const transferHandler = async () => {
+    router.push("/transfer");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -60,7 +67,7 @@ export default function App() {
                 source={{
                   uri: image
                     ? image
-                    : "https://i.scdn.co/image/ab67616d0000b273e7714e34d990a32111e66309",
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQHgBG7GK3NOmArWsUC1cD5OQHslikXwlvNw&s",
                 }}
                 style={styles.profileImage}
               />
@@ -68,7 +75,7 @@ export default function App() {
           </View>
 
           <View style={{ flex: 1 }}>
-            <Text style={styles.profileName}>Chelsea Immanuela</Text>
+            <Text style={styles.profileName}>Reynhard Powiwi</Text>
             <View style={styles.locationRow}>
               <Image source={location} style={styles.iconSmall} />
               <Text>{locationName}</Text>
@@ -82,7 +89,7 @@ export default function App() {
       <ScrollView>
         <View style={styles.greetingContainer}>
           <View style={styles.greetingTextWrapper}>
-            <Text style={styles.greetingTitle}>Good Morning, Chelsea</Text>
+            <Text style={styles.greetingTitle}>Good Afternoon, Rein</Text>
             <Text style={styles.greetingSubtitle}>
               Check all your incoming and outgoing transactions here
             </Text>
@@ -106,17 +113,24 @@ export default function App() {
           </View>
 
           <View>
-            <View style={styles.actionButton}>
-              <Image source={add} style={styles.iconSmall} />
-            </View>
-            <View style={[styles.actionButton, { marginTop: 10 }]}>
-              <Image source={send} style={styles.iconSmall} />
-            </View>
+            <TouchableOpacity onPress={topupHandler}>
+              <View style={styles.actionButton}>
+                <Image source={add} style={styles.iconSmall} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={transferHandler}>
+              <View style={[styles.actionButton, { marginTop: 10 }]}>
+                <Image source={send} style={styles.iconSmall} />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.transactionContainer}>
           <Text style={styles.transactionTitle}>Transaction History</Text>
+          <View
+            style={{ height: 1, backgroundColor: "black", marginVertical: 10 }}
+          />
 
           <View style={styles.transactionItem}>
             <View style={styles.profileImageWrapper}></View>
@@ -162,7 +176,6 @@ export default function App() {
         <View style={{ flex: 1 }}>
           <ExpoLocation setLocationName={setLocationName} />
           <Notif />
-          
         </View>
       </ScrollView>
     </View>
@@ -178,6 +191,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
   },
   profileContainer: {
     flexDirection: "row",
